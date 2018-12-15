@@ -8,6 +8,12 @@
 *.so
 *.dll
 *.dylib
+*.db
+*.opendb
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.suo
 
 # Qt-es
 object_script.*.Release
