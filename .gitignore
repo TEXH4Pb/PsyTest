@@ -15,6 +15,14 @@
 *.vcxproj.filters
 *.suo
 *.ipch
+*.obj
+*.log
+*.tlog
+*.lastbuildstate
+*.idb
+*.pdb
+*.exe
+*.ilk
 
 # Qt-es
 object_script.*.Release
