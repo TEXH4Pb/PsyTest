@@ -1,11 +1,15 @@
 #pragma once
+#include<vector>
 #include<string>
+#include<fstream>
+#include<exception>
+
 namespace PsyTest
 {
 	enum QuestionType
 	{
-		MultiOption,
-		OneOption
+		MultiOpt,
+		OneOpt
 	};
 	struct answer
 	{

@@ -1,6 +1,5 @@
 #pragma once
 #include"PsyTest.h"
-#include<vector>
 
 class PsyTest::Question
 {
@@ -10,13 +9,19 @@ public:
 	virtual int count_points() = 0;
 	virtual void add_answer(std::string text, int points) = 0;
 	virtual void remove_answer(int i) = 0;
-	virtual void write(std::ofstream file) = 0;
-	virtual bool read(std::ifstream file) = 0;
+	virtual void write(std::ofstream& file) = 0;
+	virtual bool read(std::ifstream& file) = 0;
+	bool set_image(std::string filename);
+	//сохраняет изображение на диск отдельным файлом
+	bool put_image(std::string filename);
+	virtual Question* clone() = 0;
 
-	//имя вопроса для отображения в редакторе
+	//название вопроса для отображения в редакторе
 	std::string name;
 	//текст вопроса
 	std::string text;
-	//адрес изображения
-	std::string img;
+	//размер изображения
+	unsigned long img_size;
+	//байты изображения
+	char* img;
 };
