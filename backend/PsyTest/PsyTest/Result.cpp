@@ -21,7 +21,7 @@ PsyTest::Result::Result(std::string title, std::string text, int to, int from, s
 		{
 			this->img_size = in.tellg();
 			in.seekg(std::ios::beg);
-			this->img = (char*)malloc(this->img_size);
+			this->img = new char[this->img_size];
 			in.read(this->img, this->img_size);
 			in.close();
 		}
