@@ -1,9 +1,8 @@
 #pragma once
 #include"MultiOption.h"
 
-PsyTest::MultiOption::MultiOption(std::string name, std::string text, std::string image)
+PsyTest::MultiOption::MultiOption(std::string text, std::string image)
 {
-	this->name = name;
 	this->text = text;
 	if (image != "")
 	{
@@ -31,7 +30,6 @@ PsyTest::MultiOption::MultiOption(std::string name, std::string text, std::strin
 
 PsyTest::MultiOption::MultiOption(const MultiOption & obj)
 {
-	this->name = obj.name;
 	this->text = obj.text;
 	this->img_size = obj.img_size;
 	if (this->img_size > 0)
@@ -96,14 +94,10 @@ void PsyTest::MultiOption::write(std::ofstream& file)
 	file.write((char*)&a, sizeof(a));
 
 	size_t t;
-	t = this->name.size();
+	t = this->text.size();
 	//запись длины строки
 	file.write((char*)&t, sizeof(t));
 	//запись символов строки
-	file.write(this->name.c_str(), t);
-
-	t = this->text.size();
-	file.write((char*)&t, sizeof(t));
 	file.write(this->text.c_str(), t);
 
 	//запись размеров изображения
@@ -134,12 +128,6 @@ bool PsyTest::MultiOption::read(std::ifstream& file)
 
 	size_t t = 0;
 	char* buf;
-
-	file.read((char*)&t, sizeof(t));
-	buf = new char[t + 1];
-	file.read(buf, t);
-	buf[t] = '\0';
-	this->name = buf;
 
 	file.read((char*)&t, sizeof(t));
 	buf = new char[t + 1];

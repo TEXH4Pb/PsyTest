@@ -5,7 +5,7 @@
 class PsyTest::OneOption : public PsyTest::Question
 {
 public:
-	explicit OneOption(std::string name = "", std::string text = "", std::string image = "");
+	explicit OneOption(std::string text = "", std::string image = "");
 	OneOption(const OneOption& obj);
 	~OneOption();
 	Question* clone();

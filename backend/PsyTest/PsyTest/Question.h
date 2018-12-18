@@ -16,8 +16,6 @@ public:
 	bool put_image(std::string filename);
 	virtual Question* clone() = 0;
 
-	//название вопроса для отображения в редакторе
-	std::string name;
 	//текст вопроса
 	std::string text;
 	//размер изображения

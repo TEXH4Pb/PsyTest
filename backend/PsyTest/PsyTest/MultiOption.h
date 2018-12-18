@@ -5,7 +5,7 @@
 class PsyTest::MultiOption : public PsyTest::Question
 {
 public:
-	explicit MultiOption(std::string name = "", std::string text = "", std::string image = "");
+	explicit MultiOption(std::string text = "", std::string image = "");
 	MultiOption(const MultiOption& obj);
 	~MultiOption();
 	Question* clone();
