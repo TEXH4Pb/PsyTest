@@ -1,7 +1,7 @@
-#pragma once
+п»ї#pragma once
 #include"Question.h"
 
-//Вопрос с возможностью выбрать несколько вариантов ответа
+//Р’РѕРїСЂРѕСЃ СЃ РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊСЋ РІС‹Р±СЂР°С‚СЊ РЅРµСЃРєРѕР»СЊРєРѕ РІР°СЂРёР°РЅС‚РѕРІ РѕС‚РІРµС‚Р°
 class PsyTest::MultiOption : public PsyTest::Question
 {
 public:
@@ -9,13 +9,13 @@ public:
 	MultiOption(const MultiOption& obj);
 	~MultiOption();
 	Question* clone();
-	//Подсчёт кол-ва баллов за все выбранные ответы
+	//РџРѕРґСЃС‡С‘С‚ РєРѕР»-РІР° Р±Р°Р»Р»РѕРІ Р·Р° РІСЃРµ РІС‹Р±СЂР°РЅРЅС‹Рµ РѕС‚РІРµС‚С‹
 	int count_points();
 	void add_answer(std::string text, int points);
 	void remove_answer(int i);
-	//Запись объекта в файл в бинарном режиме
+	//Р—Р°РїРёСЃСЊ РѕР±СЉРµРєС‚Р° РІ С„Р°Р№Р» РІ Р±РёРЅР°СЂРЅРѕРј СЂРµР¶РёРјРµ
 	void write(std::ofstream& file);
-	//Чтение объекта из файла в бинарном режиме
+	//Р§С‚РµРЅРёРµ РѕР±СЉРµРєС‚Р° РёР· С„Р°Р№Р»Р° РІ Р±РёРЅР°СЂРЅРѕРј СЂРµР¶РёРјРµ
 	bool read(std::ifstream& file);
 	std::vector<std::pair<answer, bool>> answers;
 };

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include"OneOption.h"
 
 PsyTest::OneOption::OneOption(std::string text, std::string image)
@@ -95,33 +95,33 @@ void PsyTest::OneOption::write(std::ofstream& file)
 	if (!file.is_open())
 		return;
 
-	//çàïèñü òèïà âîïðîñà
+	//Ð·Ð°Ð¿Ð¸ÑÑŒ Ñ‚Ð¸Ð¿Ð° Ð²Ð¾Ð¿Ñ€Ð¾ÑÐ°
 	QuestionType a = QuestionType::OneOpt;
 	file.write((char*)&a, sizeof(a));
 
 	size_t t;
 	t = this->text.size();
-	//çàïèñü äëèíû ñòðîêè
+	//Ð·Ð°Ð¿Ð¸ÑÑŒ Ð´Ð»Ð¸Ð½Ñ‹ ÑÑ‚Ñ€Ð¾ÐºÐ¸
 	file.write((char*)&t, sizeof(t));
-	//çàïèñü ñèìâîëîâ ñòðîêè
+	//Ð·Ð°Ð¿Ð¸ÑÑŒ ÑÐ¸Ð¼Ð²Ð¾Ð»Ð¾Ð² ÑÑ‚Ñ€Ð¾ÐºÐ¸
 	file.write(this->text.c_str(), t);
 
-	//çàïèñü ðàçìåðîâ èçîáðàæåíèÿ
+	//Ð·Ð°Ð¿Ð¸ÑÑŒ Ñ€Ð°Ð·Ð¼ÐµÑ€Ð¾Ð² Ð¸Ð·Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ñ
 	file.write((char*)&this->img_size, sizeof(this->img_size));
-	//çàïèñü áàéòîâ èçîáðàæåíèÿ
+	//Ð·Ð°Ð¿Ð¸ÑÑŒ Ð±Ð°Ð¹Ñ‚Ð¾Ð² Ð¸Ð·Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ñ
 	if (this->img_size)
 		file.write(this->img, this->img_size);
 
-	//çàïèñü êîë-âà îòâåòîâ ñ ïîñëåäóþùåé çàïèñüþ âñåõ îòâåòîâ
+	//Ð·Ð°Ð¿Ð¸ÑÑŒ ÐºÐ¾Ð»-Ð²Ð° Ð¾Ñ‚Ð²ÐµÑ‚Ð¾Ð² Ñ Ð¿Ð¾ÑÐ»ÐµÐ´ÑƒÑŽÑ‰ÐµÐ¹ Ð·Ð°Ð¿Ð¸ÑÑŒÑŽ Ð²ÑÐµÑ… Ð¾Ñ‚Ð²ÐµÑ‚Ð¾Ð²
 	t = this->answers.size();
 	file.write((char*)&t, sizeof(t));
 	for (int i = 0; i < this->answers.size(); ++i)
 	{
-		//çàïèñü òåêñòà îòâåòà
+		//Ð·Ð°Ð¿Ð¸ÑÑŒ Ñ‚ÐµÐºÑÑ‚Ð° Ð¾Ñ‚Ð²ÐµÑ‚Ð°
 		t = this->answers[i].text.size();
 		file.write((char*)&t, sizeof(t));
 		file.write(this->answers[i].text.c_str(), t);
-		//çàïèñü áàëëîâ çà îòâåò
+		//Ð·Ð°Ð¿Ð¸ÑÑŒ Ð±Ð°Ð»Ð»Ð¾Ð² Ð·Ð° Ð¾Ñ‚Ð²ÐµÑ‚
 		t = this->answers[i].points;
 		file.write((char*)&t, sizeof(t));
 	}

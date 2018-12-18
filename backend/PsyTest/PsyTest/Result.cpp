@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include"Result.h"
 
 PsyTest::Result::Result(std::string title, std::string text, int to, int from, std::string image)

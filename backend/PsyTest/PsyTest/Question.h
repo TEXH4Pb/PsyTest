@@ -1,25 +1,25 @@
-#pragma once
+п»ї#pragma once
 #include"PsyTest.h"
 
 class PsyTest::Question
 {
 public:
 	virtual ~Question() = default;
-	//Подсчёт кол-ва баллов за все выбранные ответы
+	//РџРѕРґСЃС‡С‘С‚ РєРѕР»-РІР° Р±Р°Р»Р»РѕРІ Р·Р° РІСЃРµ РІС‹Р±СЂР°РЅРЅС‹Рµ РѕС‚РІРµС‚С‹
 	virtual int count_points() = 0;
 	virtual void add_answer(std::string text, int points) = 0;
 	virtual void remove_answer(int i) = 0;
 	virtual void write(std::ofstream& file) = 0;
 	virtual bool read(std::ifstream& file) = 0;
 	bool set_image(std::string filename);
-	//сохраняет изображение на диск отдельным файлом
+	//СЃРѕС…СЂР°РЅСЏРµС‚ РёР·РѕР±СЂР°Р¶РµРЅРёРµ РЅР° РґРёСЃРє РѕС‚РґРµР»СЊРЅС‹Рј С„Р°Р№Р»РѕРј
 	bool put_image(std::string filename);
 	virtual Question* clone() = 0;
 
-	//текст вопроса
+	//С‚РµРєСЃС‚ РІРѕРїСЂРѕСЃР°
 	std::string text;
-	//размер изображения
+	//СЂР°Р·РјРµСЂ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ
 	unsigned long img_size;
-	//байты изображения
+	//Р±Р°Р№С‚С‹ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ
 	char* img;
 };

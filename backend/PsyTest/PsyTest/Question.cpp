@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "Question.h"
 
 bool PsyTest::Question::set_image(std::string filename)

@@ -1,4 +1,4 @@
-#pragma once
+п»ї#pragma once
 #include"PsyTest.h"
 #include"Result.h"
 #include"Question.h"
@@ -17,7 +17,7 @@ public:
 	int passedTimes_get() { return passedTimes; }
 	void passedTimes_set(int i);
 	bool set_image(std::string filename);
-	//сохраняет изображение на диск отдельным файлом
+	//СЃРѕС…СЂР°РЅСЏРµС‚ РёР·РѕР±СЂР°Р¶РµРЅРёРµ РЅР° РґРёСЃРє РѕС‚РґРµР»СЊРЅС‹Рј С„Р°Р№Р»РѕРј
 	bool put_image(std::string filename);
 
 	std::string title;
@@ -25,10 +25,10 @@ public:
 	std::vector<Question*> questions;
 	std::vector<Result> results;
 protected:
-	//кол-во прохождений
+	//РєРѕР»-РІРѕ РїСЂРѕС…РѕР¶РґРµРЅРёР№
 	int passedTimes;
-	//размер изображения
+	//СЂР°Р·РјРµСЂ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ
 	unsigned long img_size;
-	//байты изображения
+	//Р±Р°Р№С‚С‹ РёР·РѕР±СЂР°Р¶РµРЅРёСЏ
 	char* img;
 };
