@@ -20,15 +20,32 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    ../../backend/PsyTest/PsyTest/Test.cpp \
+    ../../backend/PsyTest/PsyTest/Result.cpp \
+    ../../backend/PsyTest/PsyTest/Question.cpp \
+    ../../backend/PsyTest/PsyTest/OneOption.cpp \
+    ../../backend/PsyTest/PsyTest/MultiOption.cpp \
+    editform.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    ../../backend/PsyTest/PsyTest/Test.h \
+    ../../backend/PsyTest/PsyTest/Result.h \
+    ../../backend/PsyTest/PsyTest/Question.h \
+    ../../backend/PsyTest/PsyTest/PsyTest.h \
+    ../../backend/PsyTest/PsyTest/OneOption.h \
+    ../../backend/PsyTest/PsyTest/MultiOption.h \
+    editform.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    editform.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    resources.qrc

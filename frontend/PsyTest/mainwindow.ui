@@ -20,8 +20,8 @@
    <string>PsyTest</string>
   </property>
   <property name="windowIcon">
-   <iconset>
-    <normaloff>../../../../../Pictures/Icons/iconfinder_icon-93_667353.png</normaloff>../../../../../Pictures/Icons/iconfinder_icon-93_667353.png</iconset>
+   <iconset resource="resources.qrc">
+    <normaloff>:/icons/Resources/main.png</normaloff>:/icons/Resources/main.png</iconset>
   </property>
   <property name="windowOpacity">
    <double>1.000000000000000</double>
@@ -142,6 +142,8 @@
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>
