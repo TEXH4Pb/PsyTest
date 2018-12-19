@@ -35,7 +35,7 @@ PsyTest::MultiOption::MultiOption(const MultiOption & obj)
 	if (this->img_size > 0)
 	{
 		this->img = new char[this->img_size];
-		for (int i = 0; i < this->img_size; ++i)
+		for (unsigned long i = 0; i < this->img_size; ++i)
 		{
 			this->img[i] = obj.img[i];
 		}
@@ -71,9 +71,13 @@ void PsyTest::MultiOption::add_answer(std::string text, int points)
 	answer tmp;
 	tmp.text = text;
 	tmp.points = points;
-	std::pair<answer, bool> p;
-	p.first = tmp;
-	p.second = false;
+	std::pair<answer, bool> p(tmp, false);
+	this->answers.push_back(p);
+}
+
+void PsyTest::MultiOption::add_answer(answer a)
+{
+	std::pair<answer, bool> p(a, false);
 	this->answers.push_back(p);
 }
 

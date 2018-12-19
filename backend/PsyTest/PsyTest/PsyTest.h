@@ -21,4 +21,7 @@ namespace PsyTest
 	class MultiOption;
 	class OneOption;
 	class Result;
+
+	OneOption* convertToOneOption(MultiOption obj);
+	MultiOption* convertToMultiOption(OneOption obj);
 }

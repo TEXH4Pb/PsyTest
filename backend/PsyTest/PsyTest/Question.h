@@ -8,6 +8,7 @@ public:
 	//Подсчёт кол-ва баллов за все выбранные ответы
 	virtual int count_points() = 0;
 	virtual void add_answer(std::string text, int points) = 0;
+	virtual void add_answer(answer a) = 0;
 	virtual void remove_answer(int i) = 0;
 	virtual void write(std::ofstream& file) = 0;
 	virtual bool read(std::ifstream& file) = 0;

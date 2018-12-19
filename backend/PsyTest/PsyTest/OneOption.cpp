@@ -38,7 +38,7 @@ PsyTest::OneOption::OneOption(const OneOption & obj)
 	if (this->img_size > 0)
 	{
 		this->img = new char[this->img_size];
-		for (int i = 0; i < this->img_size; ++i)
+		for (unsigned long i = 0; i < this->img_size; ++i)
 		{
 			this->img[i] = obj.img[i];
 		}
@@ -71,6 +71,11 @@ void PsyTest::OneOption::add_answer(std::string text, int points)
 	tmp.text = text;
 	tmp.points = points;
 	this->answers.push_back(tmp);
+}
+
+void PsyTest::OneOption::add_answer(answer a)
+{
+	this->answers.push_back(a);
 }
 
 void PsyTest::OneOption::remove_answer(int i)

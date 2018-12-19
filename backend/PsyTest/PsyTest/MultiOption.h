@@ -12,6 +12,7 @@ public:
 	//Подсчёт кол-ва баллов за все выбранные ответы
 	int count_points();
 	void add_answer(std::string text, int points);
+	void add_answer(answer a);
 	void remove_answer(int i);
 	//Запись объекта в файл в бинарном режиме
 	void write(std::ofstream& file);
