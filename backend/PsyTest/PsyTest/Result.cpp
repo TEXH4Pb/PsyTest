@@ -113,6 +113,7 @@ bool PsyTest::Result::read(std::ifstream & file)
 	file.read((char*)&this->from, sizeof(this->from));
 	file.read((char*)&this->to, sizeof(this->to));
 	file.read((char*)&this->occurrence, sizeof(this->occurrence));
+    return true;
 }
 
 void PsyTest::Result::to_text(std::string filename)
@@ -147,6 +148,7 @@ bool PsyTest::Result::set_image(std::string filename)
 	in.seekg(std::ios::beg);
 	in.read(this->img, this->img_size);
 	in.close();
+    return true;
 }
 
 bool PsyTest::Result::put_image(std::string filename)

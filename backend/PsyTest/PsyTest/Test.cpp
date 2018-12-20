@@ -204,6 +204,7 @@ bool PsyTest::Test::set_image(std::string filename)
 	in.seekg(std::ios::beg);
 	in.read(this->img, this->img_size);
 	in.close();
+    return true;
 }
 
 bool PsyTest::Test::put_image(std::string filename)
