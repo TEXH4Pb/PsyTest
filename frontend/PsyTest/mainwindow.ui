@@ -133,6 +133,9 @@
    </property>
   </action>
   <action name="ManualAct">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Руководство</string>
    </property>

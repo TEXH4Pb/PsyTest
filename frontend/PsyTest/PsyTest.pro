@@ -26,7 +26,11 @@ SOURCES += \
     ../../backend/PsyTest/PsyTest/Question.cpp \
     ../../backend/PsyTest/PsyTest/OneOption.cpp \
     ../../backend/PsyTest/PsyTest/MultiOption.cpp \
-    editform.cpp
+    editform.cpp \
+    answeredit.cpp \
+    testform.cpp \
+    answersmultiopt.cpp \
+    infodialog.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -36,11 +40,19 @@ HEADERS += \
     ../../backend/PsyTest/PsyTest/PsyTest.h \
     ../../backend/PsyTest/PsyTest/OneOption.h \
     ../../backend/PsyTest/PsyTest/MultiOption.h \
-    editform.h
+    editform.h \
+    answeredit.h \
+    testform.h \
+    answersmultiopt.h \
+    infodialog.h
 
 FORMS += \
         mainwindow.ui \
-    editform.ui
+    editform.ui \
+    answeredit.ui \
+    testform.ui \
+    answersmultiopt.ui \
+    infodialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
