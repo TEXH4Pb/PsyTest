@@ -6,7 +6,7 @@ PsyTest::OneOption::OneOption(std::string text, std::string image)
 	this->text = text;
 	this->selection = -1;
 
-	if (image != "")
+    if (!image.empty())
 	{
 		std::ifstream in(image, std::ios::binary | std::ios::ate);
 		if (!in.is_open())
@@ -155,7 +155,7 @@ bool PsyTest::OneOption::read(std::ifstream& file)
 	else
 		this->img = nullptr;
 
-	this->answers.empty();
+    this->answers.clear();
 	file.read((char*)&t, sizeof(t));
 	for (size_t i = 0, l; i < t; ++i)
 	{

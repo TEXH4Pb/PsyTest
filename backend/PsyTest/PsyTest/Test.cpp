@@ -7,7 +7,7 @@ PsyTest::Test::Test(std::string title, std::string description, std::string imag
 	this->description = description;
 	this->passedTimes = 0;
 
-	if (image != "")
+    if (!image.empty())
 	{
 		std::ifstream in(image, std::ios::binary | std::ios::ate);
 		if (!in.is_open())
@@ -183,7 +183,10 @@ int PsyTest::Test::get_result()
 	for (int i = 0; i < this->results.size(); ++i)
 	{
 		if (this->results[i].check(tmp))
+        {
+            this->results[i].occurrence_set(this->results[i].occurrence_get()+1);
 			return i;
+        }
 	}
 	return -1;
 }
@@ -197,11 +200,22 @@ void PsyTest::Test::passedTimes_set(int i)
 
 bool PsyTest::Test::set_image(std::string filename)
 {
+    if(filename.empty())
+    {
+        this->img_size = 0;
+        if(this->img)
+        {
+            delete[] this->img;
+            this->img = nullptr;
+        }
+    }
 	std::ifstream in(filename, std::ios::binary | std::ios::ate);
 	if (!in.is_open())
 		return false;
 	this->img_size = in.tellg();
 	in.seekg(std::ios::beg);
+    delete[] this->img;
+    this->img = new char[this->img_size];
 	in.read(this->img, this->img_size);
 	in.close();
     return true;

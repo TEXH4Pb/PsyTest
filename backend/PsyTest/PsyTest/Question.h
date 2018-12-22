@@ -19,6 +19,7 @@ public:
 
 	//текст вопроса
 	std::string text;
+protected:
 	//размер изображения
 	unsigned long img_size;
 	//байты изображения

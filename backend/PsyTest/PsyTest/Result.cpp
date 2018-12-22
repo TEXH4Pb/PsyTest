@@ -9,7 +9,7 @@ PsyTest::Result::Result(std::string title, std::string text, int to, int from, s
 	this->from = from;
 	this->occurrence = 0;
 
-	if (image != "")
+    if (!image.empty())
 	{
 		std::ifstream in(image, std::ios::binary | std::ios::ate);
 		if (!in.is_open())
@@ -141,11 +141,22 @@ bool PsyTest::Result::check(int points)
 
 bool PsyTest::Result::set_image(std::string filename)
 {
+    if(filename.empty())
+    {
+        this->img_size = 0;
+        if(this->img)
+        {
+            delete[] this->img;
+            this->img = nullptr;
+        }
+    }
 	std::ifstream in(filename, std::ios::binary | std::ios::ate);
 	if (!in.is_open())
 		return false;
 	this->img_size = in.tellg();
 	in.seekg(std::ios::beg);
+    delete[] this->img;
+    this->img = new char[this->img_size];
 	in.read(this->img, this->img_size);
 	in.close();
     return true;
