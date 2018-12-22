@@ -28,8 +28,8 @@ SOURCES += \
     ../../backend/PsyTest/PsyTest/MultiOption.cpp \
     editform.cpp \
     answeredit.cpp \
-    testform.cpp \
-    answersmultiopt.cpp \
+#   testform.cpp \
+#   answersmultiopt.cpp \
     infodialog.cpp
 
 HEADERS += \
@@ -42,16 +42,16 @@ HEADERS += \
     ../../backend/PsyTest/PsyTest/MultiOption.h \
     editform.h \
     answeredit.h \
-    testform.h \
-    answersmultiopt.h \
+#   testform.h \
+#   answersmultiopt.h \
     infodialog.h
 
 FORMS += \
         mainwindow.ui \
     editform.ui \
     answeredit.ui \
-    testform.ui \
-    answersmultiopt.ui \
+#   testform.ui \
+#   answersmultiopt.ui \
     infodialog.ui
 
 # Default rules for deployment.
