@@ -5,7 +5,8 @@
 #include <QMainWindow>
 #include <QCloseEvent>
 #include "editform.h"
-//#include "testform.h"
+#include "testform.h"
+#include "infodialog.h"
 
 enum FormStates
 {
@@ -42,9 +43,12 @@ private slots:
 
     void on_EditTestAct_triggered();
 
+    void on_LaunchTestAct_triggered();
+
 private:
     Ui::MainWindow *ui;
     void closeEvent(QCloseEvent *event);
+    bool event(QEvent *event);
 };
 
 #endif // MAINWINDOW_H

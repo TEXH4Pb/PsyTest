@@ -19,6 +19,7 @@ AnswerEdit::~AnswerEdit()
     delete ui;
 }
 
+//Возвращает готовый вариант ответа из данных в полях
 PsyTest::answer AnswerEdit::getAnswer()
 {
     PsyTest::answer r;
@@ -27,12 +28,14 @@ PsyTest::answer AnswerEdit::getAnswer()
     return r;
 }
 
+//Устанавливает данные в полях в соответствии с ответом
 void AnswerEdit::setAnswer(PsyTest::answer a)
 {
     ui->lineEdit->setText(a.text.c_str());
     ui->spinBox->setValue(a.points);
 }
 
+//Удаление варианта ответа
 void AnswerEdit::on_pushButton_clicked()
 {
     this->close();

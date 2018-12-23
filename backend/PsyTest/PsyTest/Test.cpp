@@ -177,7 +177,14 @@ int PsyTest::Test::get_result()
 	int tmp = 0;
 	for (int i = 0; i < this->questions.size(); ++i)
 	{
-		tmp += this->questions[i]->count_points();
+        try
+        {
+            tmp += this->questions[i]->count_points();
+        }
+        catch(std::logic_error e)
+        {
+            throw std::logic_error(std::to_string(i + 1));
+        }
 	}
 
 	for (int i = 0; i < this->results.size(); ++i)
