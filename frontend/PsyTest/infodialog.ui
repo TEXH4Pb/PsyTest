@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>331</width>
-    <height>234</height>
+    <width>386</width>
+    <height>251</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>180</y>
+     <x>80</x>
+     <y>190</y>
      <width>261</width>
      <height>21</height>
     </rect>
@@ -43,8 +43,8 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>190</y>
+     <x>100</x>
+     <y>200</y>
      <width>221</width>
      <height>41</height>
     </rect>
@@ -67,7 +67,7 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>130</x>
+     <x>140</x>
      <y>50</y>
      <width>131</width>
      <height>31</height>
@@ -79,32 +79,16 @@
     </font>
    </property>
    <property name="text">
-    <string>PsyTest v0.4a</string>
+    <string>PsyTest v1.0r</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
    </property>
   </widget>
-  <widget class="QLabel" name="label_4">
-   <property name="geometry">
-    <rect>
-     <x>140</x>
-     <y>80</y>
-     <width>171</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Разработано при поддержке ОАО&quot;Чеченские технологии&quot;</string>
-   </property>
-   <property name="wordWrap">
-    <bool>true</bool>
-   </property>
-  </widget>
   <widget class="QLabel" name="label_5">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>20</x>
      <y>40</y>
      <width>111</width>
      <height>111</height>
@@ -117,6 +101,41 @@
     <pixmap resource="resources.qrc">:/icons/Resources/main.png</pixmap>
    </property>
    <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>80</y>
+     <width>231</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Разработал студент ФКСиС БГУиР Рабынин Фёдор Игоревич</string>
+   </property>
+   <property name="wordWrap">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_6">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>120</y>
+     <width>131</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;GitHub: &lt;a href=&quot;https://github.com/TEXH4Pb/PsyTest&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;TEXH4Pb&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Vk: &lt;a href=&quot;https://vk.com/cheerful_sociopath&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;cheerful_sociopath&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="textFormat">
+    <enum>Qt::RichText</enum>
+   </property>
+   <property name="openExternalLinks">
     <bool>true</bool>
    </property>
   </widget>
