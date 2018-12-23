@@ -79,7 +79,7 @@
        <item row="0" column="1">
         <widget class="QGroupBox" name="groupBox">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+          <sizepolicy hsizetype="Minimum" vsizetype="MinimumExpanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -96,6 +96,12 @@
           </property>
           <item row="0" column="0" colspan="2">
            <widget class="QLabel" name="imagePreviewLabel">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
              <string/>
             </property>

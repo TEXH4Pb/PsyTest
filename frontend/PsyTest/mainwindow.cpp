@@ -166,6 +166,8 @@ void MainWindow::on_EditTestAct_triggered()
     if(filename.isEmpty())
         return;
     setCentralWidget(new EditForm(this));
+    //Принудительно отображаем форму, чтобы правильно масштабировать изображение
+    centralWidget()->show();
     qobject_cast<EditForm*>(centralWidget())->loadTest(filename);
     appState = Edit;
     ui->SaveAct->setEnabled(true);

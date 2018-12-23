@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <QMessageBox>
+#include <QFileDialog>
 #include <QtCharts/QChartView>
 #include <QtCharts/QPieSeries>
 #include <QtCharts/QPieSlice>
@@ -63,6 +64,18 @@ private slots:
 
     void on_moveDownButton_2_clicked();
 
+    void on_imageLoadButton_clicked();
+
+    void on_imageDeleteButton_clicked();
+
+    void on_imageLoadButton_2_clicked();
+
+    void on_imageDeleteButton_2_clicked();
+
+    void on_imageLoadButton_3_clicked();
+
+    void on_imageDeleteButton_3_clicked();
+
 private:
     Ui::EditForm *ui;
     QPieSeries *series;
@@ -72,13 +85,17 @@ private:
 
     PsyTest::Test* test;
     int currentQuestion;
+    QString questionImage;
     int currentResult;
+    QString resultImage;
 
     PsyTest::Question* takeQuestion();
     void updateQuestion();
 
-    PsyTest::Result takeResult();
+    PsyTest::Result* takeResult();
     void updateResult();
+
+    void updateStats();
 };
 
 #endif // EDITFORM_H

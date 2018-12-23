@@ -164,6 +164,8 @@ bool PsyTest::Result::set_image(std::string filename)
 
 bool PsyTest::Result::put_image(std::string filename)
 {
+    if(this->img_size == 0)
+        return false;
 	std::ofstream out(filename, std::ios::binary | std::ios::trunc);
 	if (!out.is_open())
 		return false;

@@ -11,7 +11,6 @@ EditForm::EditForm(QWidget *parent) :
     series = new QPieSeries();
     chart = new QChart();
     chart->addSeries(series);
-    chart->setTitle("Общее количество прохождений: ");
     chart->setTheme(QChart::ChartThemeBlueNcs);
     chart->legend()->setAlignment(Qt::AlignLeft);
     chartView = new QChartView(chart);
@@ -40,7 +39,7 @@ bool EditForm::saveTest(QString filename)
     }
     if(currentResult > -1)
     {
-        test->results[currentResult] = takeResult();
+        test->results[currentResult] = *takeResult();
         updateResult();
     }
     try
@@ -57,6 +56,7 @@ bool EditForm::saveTest(QString filename)
 
 bool EditForm::loadTest(QString filename)
 {
+    //Загрузка файла, вывод сообщения об ошибке в случае неудачи
     try
     {
         test->load(filename.toStdString());
@@ -66,12 +66,30 @@ bool EditForm::loadTest(QString filename)
     QMessageBox::critical(this, "Не удалось открыть файл", QString("Неверно выбран путь или чтение невозможно. (%0)").arg(e.what()));
     return false;
     }
-    QString tmp;
 
+    QString tmp;
+    QPixmap pix;
+    //Создание директории под временные файлы
+    QDir dir;
+    dir.setPath(QDir::currentPath());
+    if(!dir.exists("tmp"))
+        dir.mkdir("tmp");
+    dir.cd("tmp");
+    tmp = dir.absolutePath().append("/test.png");
+
+    if(test->put_image(tmp.toStdString()))
+    {
+        pix.load(tmp);
+        pix = pix.scaled(ui->imagePreviewLabel->size(), Qt::KeepAspectRatio);
+        ui->imagePreviewLabel->setPixmap(pix);
+    }
+    //Заполнение текстовых полей во кладке "общее"
     ui->titleEdit->setText(test->title.c_str());
     ui->plainTextEdit->toPlainText().clear();
     ui->plainTextEdit->insertPlainText(test->description.c_str());
 
+
+    //Заполнение списка вопросов
     ui->questionsList->clear();
     for(PsyTest::Question* q : test->questions)
     {
@@ -82,6 +100,7 @@ bool EditForm::loadTest(QString filename)
         ui->questionsList->addItem(tmp);
     }
 
+    //Заполнение списка результатов
     ui->resultsList->clear();
     for(PsyTest::Result r : test->results)
     {
@@ -91,21 +110,44 @@ bool EditForm::loadTest(QString filename)
             tmp = r.title.c_str();
         ui->resultsList->addItem(tmp);
     }
+    updateStats();
     return true;
 }
 
+//Обновление статистики
+void EditForm::updateStats()
+{
+    chart->setTitle(QString("Общее количество прохождений: ").append(QString::number(test->passedTimes_get())));
+    series->clear();
+    //Добавление частей
+    for(PsyTest::Result r : test->results)
+    {
+        series->append(new QPieSlice(r.title.c_str(), r.occurrence_get()));
+    }
+    //Добавление процентов к легенде
+    QString tmp;
+    for(auto slice : series->slices())
+    {
+        tmp = slice->label().append(": %1%").arg(100*slice->percentage(), 0, 'f', 1);
+        slice->setLabel(tmp);
+    }
+}
 //Сброс статистики
 void EditForm::on_statsResetButton_clicked()
 {
     if(QMessageBox::question(this, "Сброс статистики", "Вы уверены, что хотите сбросить статистику?") == QMessageBox::Yes)
     {
         test->passedTimes_set(0);
-        for(PsyTest::Result r : test->results)
-            r.occurrence_set(0);
+        for(int i = 0; i < test->results.size(); ++ i)
+            test->results[i].occurrence_set(0);
+        updateStats();
         QMessageBox::information(this, "Сброс статистики", "Статистика сброшена!");
     }
 }
 
+//###########//
+//GENERAL TAB//
+//###########//
 //Редактирование названия теста
 void EditForm::on_titleEdit_editingFinished()
 {
@@ -118,11 +160,34 @@ void EditForm::on_plainTextEdit_textChanged()
     test->description = ui->plainTextEdit->toPlainText().toStdString();
 }
 
+//Выбор изображения для теста
+void EditForm::on_imageLoadButton_clicked()
+{
+    QString filename = QFileDialog::getOpenFileName(this, "Выберите изображение", "", "Изображения (*.png)");
+    QPixmap pix;
+
+    if(pix.load(filename))
+    {
+        pix = pix.scaled(ui->imagePreviewLabel->size(), Qt::KeepAspectRatio);
+        ui->imagePreviewLabel->setPixmap(pix);
+        test->set_image(filename.toStdString());
+    }
+    else
+        QMessageBox::warning(this, "Ошибка", "Не удалось загрузить выбранное изображение. Попробуйте выбрать другое.");
+}
+
+//Удаление изображения теста
+void EditForm::on_imageDeleteButton_clicked()
+{
+    QPixmap pix;
+    pix.load(":/icons/Resources/image_normall.png");
+    ui->imagePreviewLabel->setPixmap(pix);
+    test->set_image("");
+}
 
 //#############//
 //QUESTIONS TAB//
 //#############//
-
 //Добавление вопроса
 void EditForm::on_addQuestionButton_clicked()
 {
@@ -172,7 +237,7 @@ PsyTest::Question* EditForm::takeQuestion()
             r->add_answer(a->getAnswer());
             delete a;
         }
-        //TODO: загрузка изображения
+        r->set_image(questionImage.toStdString());
         return r;
     }
     else
@@ -187,7 +252,7 @@ PsyTest::Question* EditForm::takeQuestion()
             r->add_answer(a->getAnswer());
             delete a;
         }
-        //TODO: загрузка изображения
+        r->set_image(questionImage.toStdString());
         return r;
     }
 }
@@ -196,6 +261,11 @@ PsyTest::Question* EditForm::takeQuestion()
 void EditForm::updateQuestion()
 {
     PsyTest::Question* ptr = test->questions[currentQuestion];
+    QDir dir;
+    dir.setPath(QDir::currentPath());
+    dir.cd("tmp");
+    QPixmap pix;
+
     while(ui->scrollAreaWidgetContents->layout()->count())
     {
         delete ui->scrollAreaWidgetContents->layout()->itemAt(0)->widget();
@@ -204,10 +274,28 @@ void EditForm::updateQuestion()
     {
         ui->questionText->setText("");
         ui->multiOptionCheckBox->setChecked(false);
+        pix.load(":/icons/Resources/image_normall.png");
+        ui->imagePreviewLabel_2->setPixmap(pix);
+        questionImage = "";
     }
     else
     {
         ui->questionText->setText(QString(ptr->text.c_str()));
+        //Если удалось загрузить изображение во временную директорию, отображаем его в окне и сохраняем путь
+        if(ptr->put_image(dir.absolutePath().append("/question.png").toStdString()))
+        {
+            pix.load(dir.absolutePath().append("/question.png"));
+            pix = pix.scaled(ui->imagePreviewLabel_2->size(), Qt::KeepAspectRatio);
+            ui->imagePreviewLabel_2->setPixmap(pix);
+            questionImage = dir.absolutePath().append("/question.png");
+        }//Ставим картинку по умолчанию, если нет
+        else
+        {
+            pix.load(":/icons/Resources/image_normall.png");
+            ui->imagePreviewLabel_2->setPixmap(pix);
+            questionImage = "";
+        }
+
         if(typeid(*ptr) == typeid(PsyTest::OneOption))
         {
             ui->multiOptionCheckBox->setChecked(false);
@@ -317,6 +405,35 @@ void EditForm::on_moveDownButton_clicked()
     }
 }
 
+//Выбор изображения для вопроса
+void EditForm::on_imageLoadButton_2_clicked()
+{
+    if(currentQuestion < 0)
+        return;
+
+    QString filename = QFileDialog::getOpenFileName(this, "Выберите изображение", "", "Изображения (*.png)");
+    QPixmap pix;
+    if(pix.load(filename))
+    {
+        pix = pix.scaled(ui->imagePreviewLabel_2->size(), Qt::KeepAspectRatio);
+        ui->imagePreviewLabel_2->setPixmap(pix);
+        questionImage = filename;
+    }
+    else
+        QMessageBox::warning(this, "Ошибка", "Не удалось загрузить выбранное изображение. Попробуйте выбрать другое.");
+}
+
+//Удаление изображения вопроса
+void EditForm::on_imageDeleteButton_2_clicked()
+{
+    if(currentQuestion < 0)
+        return;
+
+    QPixmap pix;
+    pix.load(":/icons/Resources/image_normall.png");
+    ui->imagePreviewLabel_2->setPixmap(pix);
+    questionImage = "";
+}
 
 //##########//
 //RESULT TAB//
@@ -344,21 +461,21 @@ void EditForm::on_resultsList_itemSelectionChanged()
     }
     else
     {
-        test->results[currentResult] = takeResult();
+        test->results[currentResult] = *takeResult();
         currentResult = ui->resultsList->currentRow();
         updateResult();
     }
 }
 
 //Создание результата из введённых данных
-PsyTest::Result EditForm::takeResult()
+PsyTest::Result* EditForm::takeResult()
 {
-    PsyTest::Result r("");
-    r.title = ui->resultTitleEdit->text().toStdString();
-    r.text = ui->resultDescEdit->toPlainText().toStdString();
-    r.from = ui->spinBox->value();
-    r.to = ui->spinBox_2->value();
-    //TODO: сохранение изображения
+    PsyTest::Result* r = new PsyTest::Result();
+    r->title = ui->resultTitleEdit->text().toStdString();
+    r->text = ui->resultDescEdit->toPlainText().toStdString();
+    r->from = ui->spinBox->value();
+    r->to = ui->spinBox_2->value();
+    r->set_image(resultImage.toStdString());
     return r;
 }
 
@@ -370,7 +487,24 @@ void EditForm::updateResult()
     ui->resultDescEdit->appendPlainText(test->results[currentResult].text.c_str());
     ui->spinBox->setValue(test->results[currentResult].from);
     ui->spinBox_2->setValue(test->results[currentResult].to);
-    //TODO: изображение
+
+    QDir dir;
+    dir.setPath(QDir::currentPath());
+    dir.cd("tmp");
+    QPixmap pix;
+    if(test->results[currentResult].put_image(dir.absolutePath().append("/result.png").toStdString()))
+    {
+        pix.load(dir.absolutePath().append("/result.png"));
+        pix = pix.scaled(ui->imagePreviewLabel_3->size(), Qt::KeepAspectRatio);
+        ui->imagePreviewLabel_3->setPixmap(pix);
+        resultImage = dir.absolutePath().append("/result.png");
+    }//Ставим картинку по умолчанию, если нет
+    else
+    {
+        pix.load(":/icons/Resources/image_normall.png");
+        ui->imagePreviewLabel_3->setPixmap(pix);
+        resultImage = "";
+    }
 }
 
 //Удаление выбранного результата
@@ -418,7 +552,7 @@ void EditForm::on_moveUpButton_2_clicked()
 {
     if(currentResult > 0)
     {
-        PsyTest::Result tmp = takeResult();
+        PsyTest::Result tmp = *takeResult();
         test->results[currentResult] = test->results[currentResult - 1];
         test->results[currentResult - 1] = tmp;
         updateResult();
@@ -439,7 +573,7 @@ void EditForm::on_moveDownButton_2_clicked()
 {
     if(currentResult < (ui->resultsList->count() - 1))
     {
-        PsyTest::Result tmp = takeResult();
+        PsyTest::Result tmp = *takeResult();
         test->results[currentResult] = test->results[currentResult + 1];
         test->results[currentResult + 1] = tmp;
         updateResult();
@@ -453,4 +587,34 @@ void EditForm::on_moveDownButton_2_clicked()
         else
             ui->resultsList->currentItem()->setText(QString(test->results[currentResult].title.c_str()));
     }
+}
+
+//Выбор изображения для результата
+void EditForm::on_imageLoadButton_3_clicked()
+{
+    if(currentResult < 0)
+        return;
+
+    QString filename = QFileDialog::getOpenFileName(this, "Выберите изображение", "", "Изображения (*.png)");
+    QPixmap pix;
+    if(pix.load(filename))
+    {
+        pix = pix.scaled(ui->imagePreviewLabel_3->size(), Qt::KeepAspectRatio);
+        ui->imagePreviewLabel_3->setPixmap(pix);
+        resultImage = filename;
+    }
+    else
+        QMessageBox::warning(this, "Ошибка", "Не удалось загрузить выбранное изображение. Попробуйте выбрать другое.");
+}
+
+//Удаление изображения для результат
+void EditForm::on_imageDeleteButton_3_clicked()
+{
+    if(currentResult < 0)
+        return;
+
+    QPixmap pix;
+    pix.load(":/icons/Resources/image_normall.png");
+    ui->imagePreviewLabel_3->setPixmap(pix);
+    resultImage = "";
 }

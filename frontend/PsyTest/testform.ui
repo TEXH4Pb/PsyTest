@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
-    <height>480</height>
+    <width>800</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -26,11 +26,11 @@
       <number>0</number>
      </property>
      <widget class="QWidget" name="introPage">
-      <layout class="QGridLayout" name="gridLayout" rowstretch="0,1,10,1" columnstretch="2,1,2">
+      <layout class="QGridLayout" name="gridLayout" rowstretch="5,1,10,1" columnstretch="2,1,2">
        <item row="0" column="0" colspan="3">
         <widget class="QLabel" name="introImageLabel">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Ignored">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -127,11 +127,11 @@
       </layout>
      </widget>
      <widget class="QWidget" name="testPage">
-      <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,2,10,1,1">
+      <layout class="QGridLayout" name="gridLayout_2" rowstretch="5,2,10,1,1">
        <item row="0" column="0" colspan="4">
         <widget class="QLabel" name="questionImageLabel">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Ignored">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -188,7 +188,7 @@
             <x>0</x>
             <y>0</y>
             <width>598</width>
-            <height>301</height>
+            <height>212</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2"/>
@@ -274,11 +274,11 @@
       </layout>
      </widget>
      <widget class="QWidget" name="resultPage">
-      <layout class="QGridLayout" name="gridLayout_3" rowstretch="0,1,6,0" columnstretch="1,1,1" columnminimumwidth="0,0,0">
+      <layout class="QGridLayout" name="gridLayout_3" rowstretch="3,1,6,0" columnstretch="1,1,1" columnminimumwidth="0,0,0">
        <item row="0" column="0" colspan="3">
         <widget class="QLabel" name="resultImageLabel">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Ignored">
+          <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -287,7 +287,7 @@
           <string/>
          </property>
          <property name="scaledContents">
-          <bool>true</bool>
+          <bool>false</bool>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
