@@ -33,9 +33,16 @@ EditForm::~EditForm()
 //Сохранение теста
 bool EditForm::saveTest(QString filename)
 {
-    test->questions[currentQuestion] = takeQuestion();
-    test->results[currentResult] = takeResult();
-
+    if(currentQuestion > -1)
+    {
+        test->questions[currentQuestion] = takeQuestion();
+        updateQuestion();
+    }
+    if(currentResult > -1)
+    {
+        test->results[currentResult] = takeResult();
+        updateResult();
+    }
     try
     {
     test->save(filename.toStdString());
