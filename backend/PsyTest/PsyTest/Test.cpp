@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include"Test.h"
 
 PsyTest::Test::Test(std::string title, std::string description, std::string image)
@@ -7,7 +7,7 @@ PsyTest::Test::Test(std::string title, std::string description, std::string imag
 	this->description = description;
 	this->passedTimes = 0;
 
-	if (image != "")
+    if (!image.empty())
 	{
 		std::ifstream in(image, std::ios::binary | std::ios::ate);
 		if (!in.is_open())
@@ -37,7 +37,7 @@ PsyTest::Test::Test(const Test & obj)
 	if (this->img_size > 0)
 	{
 		this->img = new char[this->img_size];
-		for (int i = 0; i < this->img_size; ++i)
+		for (unsigned long i = 0; i < this->img_size; ++i)
 		{
 			this->img[i] = obj.img[i];
 		}
@@ -177,13 +177,23 @@ int PsyTest::Test::get_result()
 	int tmp = 0;
 	for (int i = 0; i < this->questions.size(); ++i)
 	{
-		tmp += this->questions[i]->count_points();
+        try
+        {
+            tmp += this->questions[i]->count_points();
+        }
+        catch(std::logic_error e)
+        {
+            throw std::logic_error(std::to_string(i + 1));
+        }
 	}
 
 	for (int i = 0; i < this->results.size(); ++i)
 	{
 		if (this->results[i].check(tmp))
+        {
+            this->results[i].occurrence_set(this->results[i].occurrence_get()+1);
 			return i;
+        }
 	}
 	return -1;
 }
@@ -197,17 +207,31 @@ void PsyTest::Test::passedTimes_set(int i)
 
 bool PsyTest::Test::set_image(std::string filename)
 {
+    if(filename.empty())
+    {
+        this->img_size = 0;
+        if(this->img)
+        {
+            delete[] this->img;
+            this->img = nullptr;
+        }
+    }
 	std::ifstream in(filename, std::ios::binary | std::ios::ate);
 	if (!in.is_open())
 		return false;
 	this->img_size = in.tellg();
 	in.seekg(std::ios::beg);
+    delete[] this->img;
+    this->img = new char[this->img_size];
 	in.read(this->img, this->img_size);
 	in.close();
+    return true;
 }
 
 bool PsyTest::Test::put_image(std::string filename)
 {
+    if(this->img_size == 0)
+        return false;
 	std::ofstream out(filename, std::ios::binary | std::ios::trunc);
 	if (!out.is_open())
 		return false;

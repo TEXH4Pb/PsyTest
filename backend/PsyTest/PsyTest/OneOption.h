@@ -1,7 +1,7 @@
-#pragma once
+п»ї#pragma once
 #include"Question.h"
 
-//Вопрос с возможностью выбрать только один вариант ответа
+//Р’РѕРїСЂРѕСЃ СЃ РІРѕР·РјРѕР¶РЅРѕСЃС‚СЊСЋ РІС‹Р±СЂР°С‚СЊ С‚РѕР»СЊРєРѕ РѕРґРёРЅ РІР°СЂРёР°РЅС‚ РѕС‚РІРµС‚Р°
 class PsyTest::OneOption : public PsyTest::Question
 {
 public:
@@ -9,18 +9,19 @@ public:
 	OneOption(const OneOption& obj);
 	~OneOption();
 	Question* clone();
-	//Подсчёт кол-ва баллов за все выбранные ответы
+	//РџРѕРґСЃС‡С‘С‚ РєРѕР»-РІР° Р±Р°Р»Р»РѕРІ Р·Р° РІСЃРµ РІС‹Р±СЂР°РЅРЅС‹Рµ РѕС‚РІРµС‚С‹
 	int count_points();
 	void add_answer(std::string text, int points);
+	void add_answer(answer a);
 	void remove_answer(int i);
 	inline int selection_get() { return selection; };
 	bool selection_set(int i);
-	//Запись объекта в файл в бинарном режиме
+	//Р—Р°РїРёСЃСЊ РѕР±СЉРµРєС‚Р° РІ С„Р°Р№Р» РІ Р±РёРЅР°СЂРЅРѕРј СЂРµР¶РёРјРµ
 	void write(std::ofstream& file);
-	//Чтение объекта из файла в бинарном режиме
+	//Р§С‚РµРЅРёРµ РѕР±СЉРµРєС‚Р° РёР· С„Р°Р№Р»Р° РІ Р±РёРЅР°СЂРЅРѕРј СЂРµР¶РёРјРµ
 	bool read(std::ifstream& file);
 	std::vector<answer> answers;
 protected:
-	//Номер выбранного варианта ответа
+	//РќРѕРјРµСЂ РІС‹Р±СЂР°РЅРЅРѕРіРѕ РІР°СЂРёР°РЅС‚Р° РѕС‚РІРµС‚Р°
 	int selection;
 };

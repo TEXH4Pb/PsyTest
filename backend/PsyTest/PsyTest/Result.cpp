@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include"Result.h"
 
 PsyTest::Result::Result(std::string title, std::string text, int to, int from, std::string image)
@@ -9,7 +9,7 @@ PsyTest::Result::Result(std::string title, std::string text, int to, int from, s
 	this->from = from;
 	this->occurrence = 0;
 
-	if (image != "")
+    if (!image.empty())
 	{
 		std::ifstream in(image, std::ios::binary | std::ios::ate);
 		if (!in.is_open())
@@ -44,7 +44,7 @@ PsyTest::Result::Result(const Result& obj)
 	if (this->img_size > 0)
 	{
 		this->img = new char[this->img_size];
-		for (int i = 0; i < this->img_size; ++i)
+		for (unsigned long i = 0; i < this->img_size; ++i)
 		{
 			this->img[i] = obj.img[i];
 		}
@@ -113,6 +113,7 @@ bool PsyTest::Result::read(std::ifstream & file)
 	file.read((char*)&this->from, sizeof(this->from));
 	file.read((char*)&this->to, sizeof(this->to));
 	file.read((char*)&this->occurrence, sizeof(this->occurrence));
+    return true;
 }
 
 void PsyTest::Result::to_text(std::string filename)
@@ -140,17 +141,31 @@ bool PsyTest::Result::check(int points)
 
 bool PsyTest::Result::set_image(std::string filename)
 {
+    if(filename.empty())
+    {
+        this->img_size = 0;
+        if(this->img)
+        {
+            delete[] this->img;
+            this->img = nullptr;
+        }
+    }
 	std::ifstream in(filename, std::ios::binary | std::ios::ate);
 	if (!in.is_open())
 		return false;
 	this->img_size = in.tellg();
 	in.seekg(std::ios::beg);
+    delete[] this->img;
+    this->img = new char[this->img_size];
 	in.read(this->img, this->img_size);
 	in.close();
+    return true;
 }
 
 bool PsyTest::Result::put_image(std::string filename)
 {
+    if(this->img_size == 0)
+        return false;
 	std::ofstream out(filename, std::ios::binary | std::ios::trunc);
 	if (!out.is_open())
 		return false;

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include<vector>
 #include<string>
 #include<fstream>
@@ -21,4 +21,7 @@ namespace PsyTest
 	class MultiOption;
 	class OneOption;
 	class Result;
+
+	OneOption* convertToOneOption(MultiOption obj);
+	MultiOption* convertToMultiOption(OneOption obj);
 }

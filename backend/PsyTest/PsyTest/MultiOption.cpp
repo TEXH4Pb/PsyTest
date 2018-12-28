@@ -1,10 +1,10 @@
-#pragma once
+ï»¿#pragma once
 #include"MultiOption.h"
 
 PsyTest::MultiOption::MultiOption(std::string text, std::string image)
 {
 	this->text = text;
-	if (image != "")
+    if (!image.empty())
 	{
 		std::ifstream in(image, std::ios::binary | std::ios::ate);
 		if (!in.is_open())
@@ -35,7 +35,7 @@ PsyTest::MultiOption::MultiOption(const MultiOption & obj)
 	if (this->img_size > 0)
 	{
 		this->img = new char[this->img_size];
-		for (int i = 0; i < this->img_size; ++i)
+		for (unsigned long i = 0; i < this->img_size; ++i)
 		{
 			this->img[i] = obj.img[i];
 		}
@@ -71,9 +71,13 @@ void PsyTest::MultiOption::add_answer(std::string text, int points)
 	answer tmp;
 	tmp.text = text;
 	tmp.points = points;
-	std::pair<answer, bool> p;
-	p.first = tmp;
-	p.second = false;
+	std::pair<answer, bool> p(tmp, false);
+	this->answers.push_back(p);
+}
+
+void PsyTest::MultiOption::add_answer(answer a)
+{
+	std::pair<answer, bool> p(a, false);
 	this->answers.push_back(p);
 }
 
@@ -89,33 +93,33 @@ void PsyTest::MultiOption::write(std::ofstream& file)
 	if (!file.is_open())
 		return;
 
-	//çàïèñü òèïà âîïðîñà
+	//Ð·Ð°Ð¿Ð¸ÑÑŒ Ñ‚Ð¸Ð¿Ð° Ð²Ð¾Ð¿Ñ€Ð¾ÑÐ°
 	QuestionType a = QuestionType::MultiOpt;
 	file.write((char*)&a, sizeof(a));
 
 	size_t t;
 	t = this->text.size();
-	//çàïèñü äëèíû ñòðîêè
+	//Ð·Ð°Ð¿Ð¸ÑÑŒ Ð´Ð»Ð¸Ð½Ñ‹ ÑÑ‚Ñ€Ð¾ÐºÐ¸
 	file.write((char*)&t, sizeof(t));
-	//çàïèñü ñèìâîëîâ ñòðîêè
+	//Ð·Ð°Ð¿Ð¸ÑÑŒ ÑÐ¸Ð¼Ð²Ð¾Ð»Ð¾Ð² ÑÑ‚Ñ€Ð¾ÐºÐ¸
 	file.write(this->text.c_str(), t);
 
-	//çàïèñü ðàçìåðîâ èçîáðàæåíèÿ
+	//Ð·Ð°Ð¿Ð¸ÑÑŒ Ñ€Ð°Ð·Ð¼ÐµÑ€Ð¾Ð² Ð¸Ð·Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ñ
 	file.write((char*)&this->img_size, sizeof(this->img_size));
-	//çàïèñü áàéòîâ èçîáðàæåíèÿ
+	//Ð·Ð°Ð¿Ð¸ÑÑŒ Ð±Ð°Ð¹Ñ‚Ð¾Ð² Ð¸Ð·Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ñ
 	if (this->img_size)
 		file.write(this->img, this->img_size);
 
-	//çàïèñü êîë-âà îòâåòîâ ñ ïîñëåäóþùåé çàïèñüþ âñåõ îòâåòîâ
+	//Ð·Ð°Ð¿Ð¸ÑÑŒ ÐºÐ¾Ð»-Ð²Ð° Ð¾Ñ‚Ð²ÐµÑ‚Ð¾Ð² Ñ Ð¿Ð¾ÑÐ»ÐµÐ´ÑƒÑŽÑ‰ÐµÐ¹ Ð·Ð°Ð¿Ð¸ÑÑŒÑŽ Ð²ÑÐµÑ… Ð¾Ñ‚Ð²ÐµÑ‚Ð¾Ð²
 	t = this->answers.size();
 	file.write((char*)&t, sizeof(t));
 	for (int i = 0; i < this->answers.size(); ++i)
 	{
-		//çàïèñü òåêñòà îòâåòà
+		//Ð·Ð°Ð¿Ð¸ÑÑŒ Ñ‚ÐµÐºÑÑ‚Ð° Ð¾Ñ‚Ð²ÐµÑ‚Ð°
 		t = this->answers[i].first.text.size();
 		file.write((char*)&t, sizeof(t));
 		file.write(this->answers[i].first.text.c_str(), t);
-		//çàïèñü áàëëîâ çà îòâåò
+		//Ð·Ð°Ð¿Ð¸ÑÑŒ Ð±Ð°Ð»Ð»Ð¾Ð² Ð·Ð° Ð¾Ñ‚Ð²ÐµÑ‚
 		t = this->answers[i].first.points;
 		file.write((char*)&t, sizeof(t));
 	}
@@ -144,7 +148,7 @@ bool PsyTest::MultiOption::read(std::ifstream& file)
 	else
 		this->img = nullptr;
 
-	this->answers.empty();
+    this->answers.clear();
 	file.read((char*)&t, sizeof(t));
 
 	for (size_t i = 0, l; i < t; ++i)

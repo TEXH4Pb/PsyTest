@@ -1,0 +1,32 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file>Resources/add.png</file>
+        <file>Resources/add_small.png</file>
+        <file>Resources/arrow_large_down.png</file>
+        <file>Resources/arrow_large_up.png</file>
+        <file>Resources/arrow_medium_down.png</file>
+        <file>Resources/arrow_medium_up.png</file>
+        <file>Resources/ChartH.png</file>
+        <file>Resources/chartP.png</file>
+        <file>Resources/ChartV.png</file>
+        <file>Resources/comment_new.png</file>
+        <file>Resources/comment_question.png</file>
+        <file>Resources/comment_reply.png</file>
+        <file>Resources/folder.png</file>
+        <file>Resources/folder_image.png</file>
+        <file>Resources/folder_opened.png</file>
+        <file>Resources/gear.png</file>
+        <file>Resources/help.png</file>
+        <file>Resources/image_normall.png</file>
+        <file>Resources/image_small.png</file>
+        <file>Resources/information.png</file>
+        <file>Resources/list.png</file>
+        <file>Resources/lock_locked.png</file>
+        <file>Resources/lock_unlocked.png</file>
+        <file>Resources/main.png</file>
+        <file>Resources/minus_sign.png</file>
+        <file>Resources/minus_sign_small.png</file>
+        <file>Resources/remove.png</file>
+        <file>Resources/search.png</file>
+    </qresource>
+</RCC>
